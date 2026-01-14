@@ -501,7 +501,15 @@ public class RhythmChartEditorWindow : EditorWindow
     }
 
     // ===================== 유틸 =====================
-    private float SecToBeat(float sec) => sec / (60f / Mathf.Max(1f, chart.bpm));
+    
+    private float SecToBeat(float sec){
+        if (chart != null)
+        {
+            return sec / (60f / Mathf.Max(1f, chart.bpm));
+        }
+        return -1;
+       
+    }
     private float BeatToSec(float beat) => beat * (60f / Mathf.Max(1f, chart.bpm));
 
     private float MouseToBeat(Rect rect, float mouseX)
