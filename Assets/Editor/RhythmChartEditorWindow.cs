@@ -44,7 +44,7 @@ public class RhythmChartEditorWindow : EditorWindow
     private static MethodInfo StopAllPreviewClipsMethod =>
         AudioUtilType?.GetMethod("StopAllPreviewClips", BindingFlags.Static | BindingFlags.Public);
 
-    [MenuItem("Tools/Rhythm/Rhythm Chart Editor (Grid+Player)")]
+    [MenuItem("Tools/Rhythm/Rhythm Chart Editor")]
     public static void Open() => GetWindow<RhythmChartEditorWindow>("Rhythm Editor");
 
     private void OnEnable()
@@ -108,7 +108,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 chart.snapDiv = EditorGUILayout.IntPopup("Snap", chart.snapDiv,
                     new[] { "1/1", "1/2", "1/4", "1/8", "1/16" },
                     new[] { 1, 2, 4, 8, 16 },
-                    GUILayout.Width(180));
+                    GUILayout.Width(360));
 
                 zoom = EditorGUILayout.Slider("Zoom", zoom, 0.5f, 3.0f, GUILayout.Width(260));
             }
@@ -210,7 +210,7 @@ public class RhythmChartEditorWindow : EditorWindow
         const int beatsPerBar = 4;
 
         // 화면에 보이는 최소/최대 beat
-        float firstBeat = (scrollX) / ppb;
+        float firstBeat = scrollX / ppb;
         float lastBeat = (scrollX + rect.width) / ppb;
 
         // sub-step 단위(1/div)
@@ -258,6 +258,7 @@ public class RhythmChartEditorWindow : EditorWindow
                         normal = { textColor = new Color(1, 1, 1, 0.6f) }
                     });
             }
+        
         }
 
         // ===== 노트 =====

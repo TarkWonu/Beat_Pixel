@@ -1,4 +1,5 @@
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "MusicScript",menuName ="Music/MusicData")]
@@ -7,6 +8,7 @@ public class MusicScript : ScriptableObject
 
     [Header("사운드 관련 설정")]
     public int bpm;
+    
 
     public float[] beats;
     public AudioClip Music;
@@ -39,6 +41,10 @@ public class MusicScript : ScriptableObject
 
         this.beats = readData.beats;
     }
+    
+
+    
+    
 }
 
 public class SheetContext

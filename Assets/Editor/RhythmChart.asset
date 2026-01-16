@@ -12,7 +12,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f50960778e7914468e67381b195b5ba, type: 3}
   m_Name: RhythmChart
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
-  bpm: 120
+  clip: {fileID: 8300000, guid: d5c1d41b7bbb1c84993a74287eedd3d6, type: 3}
+  bpm: 60
   snapDiv: 4
-  notes: []
+  notes:
+  - beat: 4
+    type: 0
+  - beat: 4.25
+    type: 0
+  - beat: 4.5
+    type: 0
+  - beat: 4.75
+    type: 0
+  - beat: 6
+    type: 1
+  - beat: 6.25
+    type: 1
+  - beat: 6.5
+    type: 1
+  - beat: 6.75
+    type: 1
+  - beat: 8
+    type: 0
+  - beat: 8.25
+    type: 0
+  - beat: 8.5
+    type: 0
+  - beat: 8.75
+    type: 0
+  - beat: 10
+    type: 1
+  - beat: 10.25
+    type: 1
+  - beat: 10.5
+    type: 1
+  - beat: 10.75
+    type: 1
+  - beat: 12
+    type: 0
+  - beat: 12.25
+    type: 0
+  - beat: 12.5
+    type: 0
+  - beat: 12.75
+    type: 0
+  - beat: 14
+    type: 1
+  - beat: 14.25
+    type: 1
+  - beat: 14.5
+    type: 1
+  - beat: 14.75
+    type: 1
+  - beat: 16
+    type: 0
+  - beat: 16.25
+    type: 0
+  - beat: 16.5
+    type: 0
+  - beat: 16.75
+    type: 0
+  - beat: 18
+    type: 1
+  - beat: 18.25
+    type: 1
+  - beat: 18.5
+    type: 1
+  - beat: 18.75
+    type: 1
+  - beat: 24
+    type: 0
+  - beat: 25
+    type: 0
