@@ -272,7 +272,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 ? rect.y + LaneH * 0.5f
                 : rect.y + LaneH + LaneH * 0.5f;
 
-            Rect noteRect = new Rect(x - 6, yCenter - 10, 12, 20);
+            Rect noteRect = (n.isLongNote) ? new Rect(x, yCenter - 10, 12*n.longNoteSize, 20) : new Rect(x, yCenter - 10, 12, 20);
 
             Color c = (n.type == NoteType.A)
                 ? new Color(0.35f, 0.85f, 0.35f, 1f)
@@ -544,11 +544,13 @@ public class RhythmChartEditorWindow : EditorWindow
             var n = chart.notes[i];
             float x = rect.x + (n.beat * ppb) - scrollX;
 
+            float longNoteRadius = n.isLongNote ? n.longNoteSize * pickRadiusX : pickRadiusX;
+
             float yCenter = (n.type == NoteType.A)
                 ? rect.y + LaneH * 0.5f
                 : rect.y + LaneH + LaneH * 0.5f;
 
-            if (Mathf.Abs(mousePos.x - x) <= pickRadiusX &&
+            if (Mathf.Abs(mousePos.x - x) <= longNoteRadius &&
                 Mathf.Abs(mousePos.y - yCenter) <= pickRadiusY)
                 return i;
         }
@@ -590,6 +592,9 @@ public class RhythmChartEditorWindow : EditorWindow
             GUILayout.Label($"#{i}", GUILayout.Width(30));
             n.type = (NoteType)EditorGUILayout.EnumPopup(n.type, GUILayout.Width(50));
             n.beat = EditorGUILayout.FloatField(n.beat, GUILayout.Width(90));
+            GUILayout.Label("LongNoteSetting", GUILayout.Width(120));
+            n.isLongNote = EditorGUILayout.Toggle(n.isLongNote,GUILayout.Width(25));
+            if(n.isLongNote) n.longNoteSize = EditorGUILayout.IntField(n.longNoteSize,GUILayout.Width(75));
 
             if (GUILayout.Button("Seek", GUILayout.Width(50)))
                 Seek(BeatToSec(n.beat));
@@ -608,7 +613,7 @@ public class RhythmChartEditorWindow : EditorWindow
         EditorGUILayout.EndScrollView();
 
         EditorGUILayout.HelpBox(
-            "타임라인 조작:\n- 좌클릭: 노트 추가 / 노트 선택\n- 드래그: 노트 이동(스냅 적용)\n- 우클릭: 노트 삭제\n- Ctrl+좌클릭: 재생 위치 이동(Seek)\n- 휠: 좌우 스크롤, Shift+휠: 줌",
+            "타임라인 조작:\n- 좌클릭: 노트 추가 / 노트 선택\n- 드래그: 노트 이동(스냅 적용)\n- 우클릭: 노트 삭제\n- Ctrl+좌클릭: 재생 위치 이동(Seek)\n- 휠: 좌우 스크롤, Shift+휠: 줌\n노트 리스트:\n-#뒤에 오는 숫자는 노트의 인덱스입니다.\n-드롭박스는 노트가 몇번레인에 올지 정하는 메뉴이며, 1번레인이 A, 2번레인이 B입니다.\n-숫자는 몇번 박자에 노트가 올지 표기하는 숫자이며, 되도록 클릭 툴로 편집하는 것을 권장합니다.",
             MessageType.None);
     }
 }

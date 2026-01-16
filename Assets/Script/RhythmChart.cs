@@ -12,6 +12,8 @@ public enum NoteType
 public class RhythmNote
 {
     public float beat;      // 몇 번째 비트(소수 가능: 13.25 같은)
+    public bool isLongNote;
+    public int longNoteSize;
     public NoteType type;   // A/B
 }
 
