@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1317789228483140189}
   - component: {fileID: 4419659488909661819}
   - component: {fileID: -512190116050510863}
-  - component: {fileID: 7443960935717037044}
+  - component: {fileID: -2125887958223031353}
   m_Layer: 0
-  m_Name: Note
+  m_Name: Note 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd07067dbb62ab741abd47af5f109928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!120 &7443960935717037044
+--- !u!120 &-2125887958223031353
 LineRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,8 +156,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.013751984
-        value: 0.35897446
+        time: 0.011787415
+        value: 0.35042763
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -169,7 +169,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.38823533, g: 0.8117648, b: 0.9058824, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -194,7 +194,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

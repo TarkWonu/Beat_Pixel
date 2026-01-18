@@ -17,6 +17,22 @@ public class RhythmNote
     public NoteType type;   // A/B
 }
 
+public class NoteContext
+{
+    public Transform noteLine{get; private set;}
+    public float noteSpeed{get; private set;}
+    public bool isLongNote{get; private set;}
+    public float longNoteSize{get; private set;}
+
+    public NoteContext(Transform noteLine,float noteSpeed,bool isLongNote,float longNoteSize)
+    {
+        this.noteLine = noteLine;
+        this.noteSpeed = noteSpeed;
+        this.isLongNote = isLongNote;
+        this.longNoteSize = longNoteSize;
+    }
+}
+
 [CreateAssetMenu(menuName = "Rhythm/Rhythm Chart", fileName = "RhythmChart")]
 public class RhythmChart : ScriptableObject
 {

@@ -17,70 +17,138 @@ MonoBehaviour:
   snapDiv: 4
   notes:
   - beat: 4
+    isLongNote: 0
+    longNoteSize: 1
     type: 0
   - beat: 4.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 4.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 4.75
+    isLongNote: 1
+    longNoteSize: 7
     type: 0
   - beat: 6
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 6.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 6.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 6.75
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 8
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 8.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 8.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 8.75
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 10
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 10.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 10.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 10.75
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 12
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 12.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 12.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 12.75
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 14
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 14.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 14.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 14.75
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 16
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 16.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 16.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 16.75
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 18
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 18.25
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 18.5
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 18.75
+    isLongNote: 0
+    longNoteSize: 0
     type: 1
   - beat: 24
+    isLongNote: 0
+    longNoteSize: 0
     type: 0
   - beat: 25
+    isLongNote: 0
+    longNoteSize: 0
     type: 0

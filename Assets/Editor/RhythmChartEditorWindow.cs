@@ -18,7 +18,7 @@ public class RhythmChartEditorWindow : EditorWindow
     // 타임라인
     private float zoom = 1f;              // 0.5~3.0
     private float pixelsPerBeat = 90f;    // 기본 스케일
-    private float scrollX = 0f;           // 가로 스크롤(px)
+    private float scrollX = 0f;           // 가로 스크롤(px) 
 
     // 편집 상태
     private int dragIndex = -1;
@@ -272,7 +272,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 ? rect.y + LaneH * 0.5f
                 : rect.y + LaneH + LaneH * 0.5f;
 
-            Rect noteRect = (n.isLongNote) ? new Rect(x, yCenter - 10, 12*n.longNoteSize, 20) : new Rect(x, yCenter - 10, 12, 20);
+            Rect noteRect = (n.isLongNote) ? new Rect(x, yCenter - 10, 22*zoom*n.longNoteSize, 20) : new Rect(x, yCenter - 10, 12, 20);
 
             Color c = (n.type == NoteType.A)
                 ? new Color(0.35f, 0.85f, 0.35f, 1f)

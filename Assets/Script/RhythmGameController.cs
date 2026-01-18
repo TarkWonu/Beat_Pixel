@@ -1,4 +1,5 @@
 
+using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -25,7 +26,7 @@ public class RhythmGameController : MonoBehaviour
     private int beatIndex = 0;
     private float currentTime;
 
-    private float beatPerSec
+    public float beatPerSec
     {
         get
         {
@@ -59,7 +60,13 @@ public class RhythmGameController : MonoBehaviour
         {
             Transform noteSpawnPos = rhythmChart.notes[beatIndex].type == NoteType.A ? noteSpawnerA : noteSpawnerB;
             GameObject noteObj = Instantiate(notePrefeb,noteSpawnPos.position,Quaternion.identity);
-            noteObj.GetComponent<NoteScript>().Init(noteLine,noteSpeed);
+            NoteContext noteContext = new NoteContext(
+                this.noteLine,
+                noteSpeed,
+                rhythmChart.notes[beatIndex].isLongNote,
+                rhythmChart.notes[beatIndex].longNoteSize
+            );
+            noteObj.GetComponent<NoteScript>().Init(noteContext);
             Debug.Log($"{rhythmChart.notes[beatIndex].type} 라인 노트");
             beatIndex++;
             currentTime = 0f;
