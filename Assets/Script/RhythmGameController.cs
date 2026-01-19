@@ -64,10 +64,12 @@ public class RhythmGameController : MonoBehaviour
                 this.noteLine,
                 noteSpeed,
                 rhythmChart.notes[beatIndex].isLongNote,
-                rhythmChart.notes[beatIndex].longNoteSize
+                rhythmChart.notes[beatIndex].longNoteSize,
+                rhythmChart.notes[beatIndex].type
+
             );
             noteObj.GetComponent<NoteScript>().Init(noteContext);
-            Debug.Log($"{rhythmChart.notes[beatIndex].type} 라인 노트");
+           
             beatIndex++;
             currentTime = 0f;
         }

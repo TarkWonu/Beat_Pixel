@@ -29,7 +29,7 @@ MonoBehaviour:
     longNoteSize: 0
     type: 0
   - beat: 4.75
-    isLongNote: 1
+    isLongNote: 0
     longNoteSize: 7
     type: 0
   - beat: 6
