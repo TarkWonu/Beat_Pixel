@@ -21,8 +21,8 @@ public class RhythmChartEditorWindow : EditorWindow
     private float scrollX = 0f;           // 가로 스크롤(px) 
 
     // 편집 상태
-    private int dragIndex = -1;
-    private bool isDragging = false;
+    private int selectIndex = -1;
+    
 
     // 목록 스크롤
     private Vector2 listScroll;
@@ -173,8 +173,8 @@ public class RhythmChartEditorWindow : EditorWindow
                 {
                     Undo.RecordObject(chart, "Clear Notes");
                     chart.notes.Clear();
-                    dragIndex = -1;
-                    isDragging = false;
+                    selectIndex = -1;
+                    
                     EditorUtility.SetDirty(chart);
                 }
             }
@@ -284,7 +284,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 ? new Color(0.35f, 0.85f, 0.35f, 1f)
                 : new Color(0.35f, 0.6f, 0.95f, 1f);
 
-            if (i == dragIndex) c = Color.Lerp(c, Color.white, 0.35f);
+            if (i == selectIndex) c = Color.Lerp(c, Color.white, 0.35f);
 
             EditorGUI.DrawRect(noteRect, c);
             EditorGUI.DrawRect(new Rect(noteRect.x, noteRect.y, noteRect.width, 1), new Color(1, 1, 1, 0.35f));
@@ -367,10 +367,10 @@ public class RhythmChartEditorWindow : EditorWindow
         // 좌클릭: 노트 선택(드래그) or 빈곳 추가
         if (hover && e.type == EventType.MouseDown && e.button == 0 && !e.control)
         {
-            dragIndex = PickNoteIndex(rect, e.mousePosition);
-            if (dragIndex >= 0)
+            selectIndex = PickNoteIndex(rect, e.mousePosition);
+            if (selectIndex >= 0)
             {
-                isDragging = true;
+                
                 GUI.FocusControl(null);
                 e.Use();
                 return;
@@ -398,8 +398,8 @@ public class RhythmChartEditorWindow : EditorWindow
             {
                 Undo.RecordObject(chart, "Remove Note");
                 chart.notes.RemoveAt(idx);
-                dragIndex = -1;
-                isDragging = false;
+                selectIndex = -1;
+                
                 EditorUtility.SetDirty(chart);
                 e.Use();
                 Repaint();
@@ -407,34 +407,34 @@ public class RhythmChartEditorWindow : EditorWindow
             }
         }
         //롱 노트 길이 축소
-        if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.LeftArrow&&dragIndex>=0)
+        if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.LeftArrow&&selectIndex>=0)
         {
-            if (chart.notes[dragIndex].longNoteSize <= 0)
+            if (chart.notes[selectIndex].longNoteSize <= 0)
             {
-                chart.notes[dragIndex].isLongNote = false;
+                chart.notes[selectIndex].isLongNote = false;
                 
                 e.Use();
                 Repaint();
                 return;
             }
-            chart.notes[dragIndex].longNoteSize-=1f/chart.snapDiv;
+            chart.notes[selectIndex].longNoteSize-=1f/chart.snapDiv;
             e.Use();
             Repaint();
             return;
         }
 
         //롱 노트 길이 확대
-        if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.RightArrow&&dragIndex>=0)
+        if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.RightArrow&&selectIndex>=0)
         {
-            if (!chart.notes[dragIndex].isLongNote)
+            if (!chart.notes[selectIndex].isLongNote)
             {
-                chart.notes[dragIndex].isLongNote = true;
-                chart.notes[dragIndex].longNoteSize+=1f/chart.snapDiv;
+                chart.notes[selectIndex].isLongNote = true;
+                chart.notes[selectIndex].longNoteSize+=1f/chart.snapDiv;
                 e.Use();
                 Repaint();
                 return;
             }
-            chart.notes[dragIndex].longNoteSize+=1f/chart.snapDiv;
+            chart.notes[selectIndex].longNoteSize+=1f/chart.snapDiv;
             e.Use();
             Repaint();
             return;
@@ -461,38 +461,7 @@ public class RhythmChartEditorWindow : EditorWindow
             return;
         }
 
-        // 드래그 이동
-        if (isDragging && dragIndex >= 0 && e.type == EventType.MouseDrag && e.button == 0)
-        {
-            Undo.RecordObject(chart, "Move Note");
-
-            NoteType type = MouseToLane(rect, e.mousePosition.y);
-            float beat = SnapBeat(MouseToBeat(rect, e.mousePosition.x));
-
-            chart.notes[dragIndex].beat = Mathf.Max(0f, beat);
-            chart.notes[dragIndex].type = type;
-
-            EditorUtility.SetDirty(chart);
-            e.Use();
-            Repaint();
-            return;
-        }
-
-        // 드래그 종료: 정렬
-        if (isDragging && e.type == EventType.MouseUp && e.button == 0)
-        {
-            isDragging = false;
-
-            Undo.RecordObject(chart, "Sort After Drag");
-            var moved = chart.notes[dragIndex];
-            chart.notes = chart.notes.OrderBy(n => n.beat).ThenBy(n => n.type).ToList();
-            dragIndex = FindClosestIndex(chart.notes, moved);
-
-            EditorUtility.SetDirty(chart);
-            e.Use();
-            Repaint();
-            return;
-        }
+        
     }
 
     // ===================== 재생 로직 =====================
