@@ -445,7 +445,12 @@ public class RhythmChartEditorWindow : EditorWindow
         {
             Undo.RecordObject(chart, "Add Note");
             NoteType type = Event.current.keyCode == KeyCode.A ? NoteType.A : NoteType.B;
-            float beat = SnapBeat(GetSongTimeSec());
+
+            float ppb = pixelsPerBeat * zoom;
+
+            float t = GetSongTimeSec();
+            float beat = SecToBeat(t);
+            
 
             chart.notes.Add(new RhythmNote { beat = Mathf.Max(0f, beat), type = type });
             chart.notes = chart.notes.OrderBy(n => n.beat).ThenBy(n => n.type).ToList();
