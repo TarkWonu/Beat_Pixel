@@ -452,7 +452,7 @@ public class RhythmChartEditorWindow : EditorWindow
             float beat = SecToBeat(t);
             
 
-            chart.notes.Add(new RhythmNote { beat = Mathf.Max(0f, beat), type = type });
+            chart.notes.Add(new RhythmNote { beat = Mathf.Max(0f, SnapBeat(beat)), type = type });
             chart.notes = chart.notes.OrderBy(n => n.beat).ThenBy(n => n.type).ToList();
 
             EditorUtility.SetDirty(chart);
