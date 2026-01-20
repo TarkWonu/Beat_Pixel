@@ -106,8 +106,8 @@ public class RhythmChartEditorWindow : EditorWindow
 
                 chart.bpm = EditorGUILayout.FloatField("BPM", Mathf.Max(1f, chart.bpm), GUILayout.Width(180));
                 chart.snapDiv = EditorGUILayout.IntPopup("Snap", chart.snapDiv,
-                    new[] { "1/1", "1/2", "1/4", "1/8", "1/16" },
-                    new[] { 1, 2, 4, 8, 16 },
+                    new[] { "1/1", "1/2", "1/4", "1/8", "1/15","1/16" },
+                    new[] { 1, 2, 4, 8, 15,16 },
                     GUILayout.Width(360));
 
                 zoom = EditorGUILayout.Slider("Zoom", zoom, 0.5f, 3.0f, GUILayout.Width(260));
@@ -264,6 +264,7 @@ public class RhythmChartEditorWindow : EditorWindow
         // ===== 노트 =====
         for (int i = 0; i < chart.notes.Count; i++)
         {
+            float width = 12;
             var n = chart.notes[i];
             float x = rect.x + (n.beat * ppb) - scrollX;
             if (x < rect.x - 20 || x > rect.xMax + 20) continue;
@@ -271,8 +272,13 @@ public class RhythmChartEditorWindow : EditorWindow
             float yCenter = (n.type == NoteType.A)
                 ? rect.y + LaneH * 0.5f
                 : rect.y + LaneH + LaneH * 0.5f;
+            if (n.isLongNote)
+            {
+                
+                width = ppb * Mathf.Max(0.1f, n.longNoteSize); // 최소 길이 확보
+            }
 
-            Rect noteRect = (n.isLongNote) ? new Rect(x, yCenter - 10, 22*zoom*n.longNoteSize, 20) : new Rect(x, yCenter - 10, 12, 20);
+            Rect noteRect = new Rect(x, yCenter - 10, width, 20);
 
             Color c = (n.type == NoteType.A)
                 ? new Color(0.35f, 0.85f, 0.35f, 1f)
@@ -399,6 +405,55 @@ public class RhythmChartEditorWindow : EditorWindow
                 Repaint();
                 return;
             }
+        }
+        //롱 노트 길이 축소
+        if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.LeftArrow&&dragIndex>=0)
+        {
+            if (chart.notes[dragIndex].longNoteSize <= 0)
+            {
+                chart.notes[dragIndex].isLongNote = false;
+                
+                e.Use();
+                Repaint();
+                return;
+            }
+            chart.notes[dragIndex].longNoteSize-=1f/chart.snapDiv;
+            e.Use();
+            Repaint();
+            return;
+        }
+
+        //롱 노트 길이 확대
+        if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.RightArrow&&dragIndex>=0)
+        {
+            if (!chart.notes[dragIndex].isLongNote)
+            {
+                chart.notes[dragIndex].isLongNote = true;
+                chart.notes[dragIndex].longNoteSize+=1f/chart.snapDiv;
+                e.Use();
+                Repaint();
+                return;
+            }
+            chart.notes[dragIndex].longNoteSize+=1f/chart.snapDiv;
+            e.Use();
+            Repaint();
+            return;
+            
+        }
+
+        if(e.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.A||Event.current.keyCode == KeyCode.B) && isPlaying)
+        {
+            Undo.RecordObject(chart, "Add Note");
+            NoteType type = Event.current.keyCode == KeyCode.A ? NoteType.A : NoteType.B;
+            float beat = SnapBeat(GetSongTimeSec());
+
+            chart.notes.Add(new RhythmNote { beat = Mathf.Max(0f, beat), type = type });
+            chart.notes = chart.notes.OrderBy(n => n.beat).ThenBy(n => n.type).ToList();
+
+            EditorUtility.SetDirty(chart);
+            e.Use();
+            Repaint();
+            return;
         }
 
         // 드래그 이동
@@ -536,7 +591,7 @@ public class RhythmChartEditorWindow : EditorWindow
     {
         float ppb = pixelsPerBeat * zoom;
 
-        const float pickRadiusX = 10f;
+        float width = 12f;
         const float pickRadiusY = 16f;
 
         for (int i = 0; i < chart.notes.Count; i++)
@@ -544,13 +599,17 @@ public class RhythmChartEditorWindow : EditorWindow
             var n = chart.notes[i];
             float x = rect.x + (n.beat * ppb) - scrollX;
 
-            float longNoteRadius = n.isLongNote ? n.longNoteSize * pickRadiusX : pickRadiusX;
+            if (n.isLongNote)
+            {
+                width = ppb * Mathf.Max(0.1f, n.longNoteSize);
+            }
+
 
             float yCenter = (n.type == NoteType.A)
                 ? rect.y + LaneH * 0.5f
                 : rect.y + LaneH + LaneH * 0.5f;
 
-            if (Mathf.Abs(mousePos.x - x) <= longNoteRadius &&
+            if (Mathf.Abs(mousePos.x - x) <= width &&
                 Mathf.Abs(mousePos.y - yCenter) <= pickRadiusY)
                 return i;
         }
@@ -594,7 +653,7 @@ public class RhythmChartEditorWindow : EditorWindow
             n.beat = EditorGUILayout.FloatField(n.beat, GUILayout.Width(90));
             GUILayout.Label("LongNoteSetting", GUILayout.Width(120));
             n.isLongNote = EditorGUILayout.Toggle(n.isLongNote,GUILayout.Width(25));
-            if(n.isLongNote) n.longNoteSize = EditorGUILayout.IntField(n.longNoteSize,GUILayout.Width(75));
+            if(n.isLongNote) n.longNoteSize = EditorGUILayout.FloatField(n.longNoteSize,GUILayout.Width(75));
 
             if (GUILayout.Button("Seek", GUILayout.Width(50)))
                 Seek(BeatToSec(n.beat));
@@ -604,7 +663,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 Undo.RecordObject(chart, "Remove Note");
                 chart.notes.RemoveAt(i);
                 EditorUtility.SetDirty(chart);
-                break;
+                
             }
 
             EditorGUILayout.EndHorizontal();

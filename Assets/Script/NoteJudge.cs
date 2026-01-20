@@ -1,5 +1,4 @@
-using System;
-using UnityEditor;
+
 using UnityEngine;
 
 public class NoteJudge : MonoBehaviour
@@ -27,89 +26,102 @@ public class NoteJudge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
-        JudgeRhythmNote(notes);
+        
+        JudgeRhythmNote();
         
     }
 
-    private void JudgeRhythmNote(GameObject[] noteList)
-{
-    if (closet == null)
+    private void JudgeRhythmNote()
     {
-        closet = FindClosetNote(noteList);
-        if (closet == null) return; // 💥 null 방어
+        if (closet != null) 
+            Debug.DrawLine(transform.position, closet.transform.position, Color.cyan);
+        if (closet == null)
+        {
+            closet = FindClosetNote();
+            if (closet == null) return; 
+        }
+
+        float distance = closet.transform.position.y - transform.position.y;
+
+        if (closet.transform.position.y<transform.position.y-badDistance)
+        {
+            Debug.Log("Miss");
+            
+            if (judgeLine == NoteType.A)
+                RhythmNoteManager.Instance.ALaneList.Remove(closet);
+            else
+                RhythmNoteManager.Instance.BLaneList.Remove(closet);
+            closet = null; 
+            return;
+        }
+
+        if (Input.GetKeyDown(judgeKey))
+        {
+            if (Mathf.Abs(distance) < perfectDistance)
+            {
+                Debug.Log("Perfect");
+            }
+            else if (Mathf.Abs(distance) < goodDistance)
+            {
+                Debug.Log("Good");
+            }
+            else if (Mathf.Abs(distance) < badDistance)
+            {
+                Debug.Log("Bad");
+            }
+            else
+            {
+                Debug.Log("Miss");
+            }
+
+            closet.SetActive(false);
+            if (judgeLine == NoteType.A)
+                RhythmNoteManager.Instance.ALaneList.Remove(closet);
+            else
+                RhythmNoteManager.Instance.BLaneList.Remove(closet);
+            closet = null; 
+        }
     }
 
-    float distance = closet.transform.position.y - transform.position.y;
-
-    if (distance < -badDistance)
+    GameObject FindClosetNote()
     {
-        Debug.Log("Miss");
-        closet.SetActive(false);
-        closet = null; 
-        return;
-    }
-
-    if (Input.GetKeyDown(judgeKey))
-    {
-        if (Mathf.Abs(distance) < perfectDistance)
+        if (judgeLine == NoteType.A)
         {
-            Debug.Log("Perfect");
-        }
-        else if (Mathf.Abs(distance) < goodDistance)
-        {
-            Debug.Log("Good");
-        }
-        else if (Mathf.Abs(distance) < badDistance)
-        {
-            Debug.Log("Bad");
+            if (RhythmNoteManager.Instance.ALaneList.Count != 0)
+            {
+                return RhythmNoteManager.Instance.ALaneList[0];
+            }
+            
         }
         else
         {
-            Debug.Log("Miss");
-        }
-
-        closet.SetActive(false);
-        closet = null; 
-    }
-}
-
-    GameObject FindClosetNote(GameObject[] noteList)
-    {
-        GameObject note = null;
-        if(noteList.Length ==0 ) return null;
-        foreach(var n in noteList)
-        {
-            NoteScript noteScript  = n.GetComponent<NoteScript>();
-            
-            
-            if(noteScript.noteType == judgeLine)
+            if (RhythmNoteManager.Instance.BLaneList.Count != 0)
             {
-                if (note == null)
-                {
-                    note = n;
-                    continue;
-                }
-                
-                if (n.transform.position.y < note?.transform.position.y&&transform.position.y-n.transform.position.y<-badDistance)
-                {
-                    note = n;
-                }
+                return RhythmNoteManager.Instance.BLaneList[0];
             }
         }
-        return note;
+        return null;
     }
+
 
     void OnDrawGizmos()
     {
+
+        Vector3 pos = transform.position;
+    
+    // 미스 판정 경계선을 빨간색 선으로 그립니다.
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position,badDistance);
+        Vector3 missLinePos = new Vector3(pos.x - 1f, pos.y - badDistance, pos.z);
+        Vector3 missLineEnd = new Vector3(pos.x + 1f, pos.y - badDistance, pos.z);
+        Gizmos.DrawLine(missLinePos, missLineEnd);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position,badDistance);
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position,goodDistance);
+        Gizmos.DrawWireSphere(transform.position,goodDistance);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position,perfectDistance);
+        Gizmos.DrawWireSphere(transform.position,perfectDistance);
         
         
         

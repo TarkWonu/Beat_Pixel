@@ -59,7 +59,16 @@ public class RhythmGameController : MonoBehaviour
         if (currentTime >= beatTime-noteSpeed)
         {
             Transform noteSpawnPos = rhythmChart.notes[beatIndex].type == NoteType.A ? noteSpawnerA : noteSpawnerB;
+            
             GameObject noteObj = Instantiate(notePrefeb,noteSpawnPos.position,Quaternion.identity);
+            if(rhythmChart.notes[beatIndex].type == NoteType.A)
+            {
+                RhythmNoteManager.Instance.ALaneList.Add(noteObj);
+            }
+            else
+            {
+                RhythmNoteManager.Instance.BLaneList.Add(noteObj);
+            }
             NoteContext noteContext = new NoteContext(
                 this.noteLine,
                 noteSpeed,

@@ -10,7 +10,7 @@ public class NoteScript : MonoBehaviour
     private bool isLongNote;
     private float longNoteLength;
     private float longNoteSize;
-    public NoteType noteType;
+    
     LineRenderer lineRenderer;
 
     
@@ -20,7 +20,7 @@ public class NoteScript : MonoBehaviour
         noteSpeed = noteContext.noteSpeed;
         isLongNote = noteContext.isLongNote;
         longNoteSize = noteContext.longNoteSize;
-        noteType = noteContext.NoteType;
+        
 
         distance = Mathf.Abs(transform.position.y - rhytmeLine.position.y)/noteSpeed;
 
@@ -45,8 +45,8 @@ public class NoteScript : MonoBehaviour
     private void MakeLongNote()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        RhythmGameController rhythmGameController = FindObjectOfType<RhythmGameController>().GetComponent<RhythmGameController>();
-        float longNoteTime = rhythmGameController.beatPerSec *  1/rhythmGameController.rhythmChart.snapDiv * longNoteSize;   
+        
+        float longNoteTime = longNoteSize;   
         longNoteLength = distance * longNoteTime; 
     }
 

@@ -18,7 +18,7 @@ MonoBehaviour:
   notes:
   - beat: 4
     isLongNote: 0
-    longNoteSize: 1
+    longNoteSize: 0
     type: 0
   - beat: 4.25
     isLongNote: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     type: 0
   - beat: 4.75
     isLongNote: 0
-    longNoteSize: 7
+    longNoteSize: 0
     type: 0
   - beat: 6
     isLongNote: 0
@@ -145,10 +145,54 @@ MonoBehaviour:
     longNoteSize: 0
     type: 1
   - beat: 24
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 0.75
     type: 0
   - beat: 25
+    isLongNote: 1
+    longNoteSize: 0.5
+    type: 0
+  - beat: 26.25
     isLongNote: 0
     longNoteSize: 0
     type: 0
+  - beat: 26.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 26.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 27
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 27.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 27.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 27.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 28.25
+    isLongNote: 1
+    longNoteSize: 0.25
+    type: 0
+  - beat: 28.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 28.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 29
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
