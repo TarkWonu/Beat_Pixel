@@ -10,33 +10,31 @@ public class RhythmChartEditorWindow : EditorWindow
 {
     private RhythmChart chart;
 
-    // 레이아웃
+    
     private const float HeaderH = 92f;
     private const float LanesH = 140f;
     private const float LaneH = LanesH / 2f;
 
-    // 타임라인
-    private float zoom = 1f;              // 0.5~3.0
-    private float pixelsPerBeat = 90f;    // 기본 스케일
-    private float scrollX = 0f;           // 가로 스크롤(px) 
+    
+    private float zoom = 1f;              
+    private float pixelsPerBeat = 90f;    
+    private float scrollX = 0f;           
 
-    // 편집 상태
+    
     private int selectIndex = -1;
     
 
-    // 목록 스크롤
+    
     private Vector2 listScroll;
 
-    // ===== 재생(AudioUtil) =====
+    
     private bool isPlaying = false;
-    private double playStartEditorTime;   // EditorApplication.timeSinceStartup
-    private float playOffsetSec = 0f;     // Pause 후 이어재생/Seek용
-
+    private double playStartEditorTime;   
+    private float playOffsetSec = 0f;     
     private static readonly Type AudioUtilType =
         typeof(AudioImporter).Assembly.GetType("UnityEditor.AudioUtil");
 
-    // Unity 버전에 따라 시그니처가 다를 수 있어 가장 흔한 형태로 호출
-    // PlayPreviewClip(AudioClip clip, int startSample, bool loop)
+    
     private static MethodInfo PlayPreviewClipMethod =>
         AudioUtilType?.GetMethod("PlayPreviewClip", BindingFlags.Static | BindingFlags.Public, null,
             new[] { typeof(AudioClip), typeof(int), typeof(bool) }, null);
@@ -85,7 +83,7 @@ public class RhythmChartEditorWindow : EditorWindow
             EditorUtility.SetDirty(chart);
     }
 
-    // ===================== 상단 패널 =====================
+    
     private void DrawTopPanel()
     {
         GUILayout.Space(6);
@@ -116,7 +114,7 @@ public class RhythmChartEditorWindow : EditorWindow
 
         GUILayout.Space(6);
 
-        // Transport
+        
         using (new EditorGUILayout.HorizontalScope("box"))
         {
             bool canPlay = chart != null && chart.clip != null;
@@ -148,7 +146,7 @@ public class RhythmChartEditorWindow : EditorWindow
 
             GUILayout.FlexibleSpace();
 
-            // Seek Slider
+           
             using (new EditorGUI.DisabledScope(chart == null || chart.clip == null))
             {
                 float newT = GUILayout.HorizontalSlider(t, 0f, secLen, GUILayout.Width(320));
@@ -180,28 +178,28 @@ public class RhythmChartEditorWindow : EditorWindow
             }
         }
 
-        // 분리선
+        
         EditorGUI.DrawRect(new Rect(0, HeaderH - 2, position.width, 1), new Color(0, 0, 0, 0.25f));
     }
 
-    // ===================== 타임라인 그리기 =====================
+   
     private void DrawTimeline(Rect rect)
     {
-        // 배경
+        
         EditorGUI.DrawRect(rect, new Color(0.12f, 0.12f, 0.12f, 1f));
 
-        // 레인 배경
+        
         Rect laneARect = new Rect(rect.x, rect.y, rect.width, LaneH);
         Rect laneBRect = new Rect(rect.x, rect.y + LaneH, rect.width, LaneH);
         EditorGUI.DrawRect(laneARect, new Color(0, 0, 0, 0.08f));
         EditorGUI.DrawRect(laneBRect, new Color(0, 0, 0, 0.14f));
         EditorGUI.DrawRect(new Rect(rect.x, rect.y + LaneH, rect.width, 1), new Color(1, 1, 1, 0.12f));
 
-        // 레인 라벨
+       
         GUI.Label(new Rect(rect.x + 6, rect.y + 6, 30, 20), "A", EditorStyles.boldLabel);
         GUI.Label(new Rect(rect.x + 6, rect.y + LaneH + 6, 30, 20), "B", EditorStyles.boldLabel);
 
-        // ===== 촘촘한 그리드 =====
+       
         float ppb = pixelsPerBeat * zoom;
         float left = rect.x - scrollX;
         float right = rect.xMax;
@@ -209,11 +207,11 @@ public class RhythmChartEditorWindow : EditorWindow
         int div = Mathf.Max(1, chart.snapDiv);
         const int beatsPerBar = 4;
 
-        // 화면에 보이는 최소/최대 beat
+       
         float firstBeat = scrollX / ppb;
         float lastBeat = (scrollX + rect.width) / ppb;
 
-        // sub-step 단위(1/div)
+        
         int kStart = Mathf.FloorToInt(firstBeat * div) - 2;
         int kEnd = Mathf.CeilToInt(lastBeat * div) + 2;
 
@@ -225,24 +223,21 @@ public class RhythmChartEditorWindow : EditorWindow
             float x = rect.x + (beat * ppb) - scrollX;
             if (x < rect.x - 4 || x > right + 4) continue;
 
-            // 강조 규칙
-            // - 마디선: 굵고 진함
-            // - 1비트: 중간
-            // - 1/2, 1/4 ...: 얇고 약함
+            
             bool isBar = (k % (beatsPerBar * div) == 0);
             bool isBeat = (k % div == 0);
 
             float w = isBar ? 2f : (isBeat ? 1.6f : 1f);
             float a = isBar ? 0.38f : (isBeat ? 0.24f : 0.12f);
 
-            // snapDiv가 커질수록 너무 빽빽해 보이니 아주 미세선은 더 약하게
+            
             if (!isBeat)
             {
-                // 1/2는 조금 더 보이게
+               
                 if (div >= 2 && (k % (div / 2) == 0)) a = 0.16f;
-                // 1/4는 중간
+                
                 if (div >= 4 && (k % (div / 4) == 0)) a = 0.14f;
-                // 더 미세(1/8~)는 약하게
+                
                 if (div >= 8 && (k % (div / 8) == 0)) a = 0.10f;
             }
 
@@ -261,7 +256,7 @@ public class RhythmChartEditorWindow : EditorWindow
         
         }
 
-        // ===== 노트 =====
+        
         for (int i = 0; i < chart.notes.Count; i++)
         {
             float width = 12;
@@ -275,7 +270,7 @@ public class RhythmChartEditorWindow : EditorWindow
             if (n.isLongNote)
             {
                 
-                width = ppb * Mathf.Max(0.1f, n.longNoteSize); // 최소 길이 확보
+                width = ppb * Mathf.Max(0.1f, n.longNoteSize); 
             }
 
             Rect noteRect = new Rect(x, yCenter - 10, width, 20);
@@ -291,7 +286,7 @@ public class RhythmChartEditorWindow : EditorWindow
             EditorGUI.DrawRect(new Rect(noteRect.x, noteRect.yMax - 1, noteRect.width, 1), new Color(0, 0, 0, 0.25f));
         }
 
-        // ===== 재생 헤드 =====
+        
         if (chart.clip != null)
         {
             float t = GetSongTimeSec();
@@ -304,7 +299,7 @@ public class RhythmChartEditorWindow : EditorWindow
             }
         }
 
-        // 안내 문구
+        
         GUI.Label(new Rect(rect.xMax - 420, rect.y + 6, 414, 18),
             "LMB: add/select  |  Drag: move  |  RMB: delete  |  Ctrl+LMB: seek  |  Wheel: scroll  |  Shift+Wheel: zoom",
             new GUIStyle(EditorStyles.miniLabel)
@@ -314,7 +309,7 @@ public class RhythmChartEditorWindow : EditorWindow
             });
     }
 
-    // ===================== 입력 처리 =====================
+    
     private void HandleTimelineInput(Rect rect)
     {
         if (chart == null) return;
@@ -322,35 +317,20 @@ public class RhythmChartEditorWindow : EditorWindow
         Event e = Event.current;
         bool hover = rect.Contains(e.mousePosition);
 
-        // Wheel: scroll / Shift+Wheel: zoom
+        
         if (hover && e.type == EventType.ScrollWheel)
         {
-            if (e.shift)
-            {
-                float oldZoom = zoom;
-                zoom = Mathf.Clamp(zoom + (-e.delta.y * 0.02f), 0.5f, 3.0f);
-
-                float ppbOld = pixelsPerBeat * oldZoom;
-                float ppbNew = pixelsPerBeat * zoom;
-
-                float mouseBeat = (scrollX + (e.mousePosition.x - rect.x)) / ppbOld;
-                float newScrollX = mouseBeat * ppbNew - (e.mousePosition.x - rect.x);
-                scrollX = Mathf.Max(0f, newScrollX);
-
-                e.Use();
-                Repaint();
-                return;
-            }
-            else
-            {
-                scrollX = Mathf.Max(0f, scrollX + e.delta.y * 25f);
-                e.Use();
-                Repaint();
-                return;
-            }
+            
+            
+        
+            scrollX = Mathf.Max(0f, scrollX + e.delta.y * 25f);
+            e.Use();
+            Repaint();
+            return;
+            
         }
 
-        // Ctrl+좌클릭: Seek
+        
         if (hover && e.type == EventType.MouseDown && e.button == 0 && e.control)
         {
             float beat = MouseToBeat(rect, e.mousePosition.x);
@@ -364,7 +344,7 @@ public class RhythmChartEditorWindow : EditorWindow
             return;
         }
 
-        // 좌클릭: 노트 선택(드래그) or 빈곳 추가
+        
         if (hover && e.type == EventType.MouseDown && e.button == 0 && !e.control)
         {
             selectIndex = PickNoteIndex(rect, e.mousePosition);
@@ -376,7 +356,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 return;
             }
 
-            // 빈 곳: 추가
+            
             Undo.RecordObject(chart, "Add Note");
             NoteType type = MouseToLane(rect, e.mousePosition.y);
             float beat = SnapBeat(MouseToBeat(rect, e.mousePosition.x));
@@ -390,7 +370,7 @@ public class RhythmChartEditorWindow : EditorWindow
             return;
         }
 
-        // 우클릭: 삭제
+        
         if (hover && e.type == EventType.MouseDown && e.button == 1)
         {
             int idx = PickNoteIndex(rect, e.mousePosition);
@@ -406,7 +386,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 return;
             }
         }
-        //롱 노트 길이 축소
+        
         if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.LeftArrow&&selectIndex>=0)
         {
             if (chart.notes[selectIndex].longNoteSize <= 0)
@@ -423,7 +403,7 @@ public class RhythmChartEditorWindow : EditorWindow
             return;
         }
 
-        //롱 노트 길이 확대
+        
         if(e.type == EventType.KeyDown && Event.current.keyCode == KeyCode.RightArrow&&selectIndex>=0)
         {
             if (!chart.notes[selectIndex].isLongNote)
@@ -464,7 +444,7 @@ public class RhythmChartEditorWindow : EditorWindow
         
     }
 
-    // ===================== 재생 로직 =====================
+    
     private float GetSongTimeSec()
     {
         if (chart == null || chart.clip == null) return 0f;
@@ -485,7 +465,7 @@ public class RhythmChartEditorWindow : EditorWindow
 
         if (isPlaying)
         {
-            PlayPreview(playOffsetSec); // 재생 중이면 해당 위치부터 재시작
+            PlayPreview(playOffsetSec); 
         }
         else
         {
@@ -504,7 +484,7 @@ public class RhythmChartEditorWindow : EditorWindow
 
         int startSample = Mathf.Clamp((int)(startTimeSec * chart.clip.frequency), 0, chart.clip.samples - 1);
 
-        // AudioUtil.PlayPreviewClip(clip, startSample, loop=false)
+        
         PlayPreviewClipMethod?.Invoke(null, new object[] { chart.clip, startSample, false });
     }
 
@@ -530,7 +510,7 @@ public class RhythmChartEditorWindow : EditorWindow
         StopAllPreviewClipsMethod?.Invoke(null, null);
     }
 
-    // ===================== 유틸 =====================
+    
     
     private float SecToBeat(float sec){
         if (chart != null)
@@ -590,27 +570,8 @@ public class RhythmChartEditorWindow : EditorWindow
         return -1;
     }
 
-    private int FindClosestIndex(List<RhythmNote> list, RhythmNote target)
-    {
-        int best = -1;
-        float bestScore = float.MaxValue;
+    
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            var n = list[i];
-            if (n.type != target.type) continue;
-
-            float score = Mathf.Abs(n.beat - target.beat);
-            if (score < bestScore)
-            {
-                bestScore = score;
-                best = i;
-            }
-        }
-        return best;
-    }
-
-    // ===================== 리스트 =====================
     private void DrawNotesList()
     {
         EditorGUILayout.LabelField($"Notes ({chart.notes.Count})", EditorStyles.boldLabel);
