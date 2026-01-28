@@ -1,6 +1,14 @@
 
 using UnityEngine;
 
+enum RhythmState
+{
+    Perfect,
+    Good,
+    Bad,
+    Miss
+}
+
 public class NoteJudge : MonoBehaviour
 {
     [SerializeField] private NoteType judgeLine;
@@ -9,6 +17,8 @@ public class NoteJudge : MonoBehaviour
     [SerializeField] private float badDistance;
 
     private GameObject closet = null;
+
+    private bool isPressed = false;
      
     private KeyCode judgeKey
     {
@@ -41,49 +51,30 @@ public class NoteJudge : MonoBehaviour
             if (closet == null) return; 
         }
 
-        float distance = closet.transform.position.y - transform.position.y;
+        
 
-        if (closet.transform.position.y<transform.position.y-badDistance)
+        
+
+        if (closet.GetComponent<NoteScript>().isLongNote)
         {
-            Debug.Log("Miss");
-            
-            if (judgeLine == NoteType.A)
-                RhythmNoteManager.Instance.ALaneList.Remove(closet);
-            else
-                RhythmNoteManager.Instance.BLaneList.Remove(closet);
-            closet = null; 
-            return;
+            JudgeLongNote();
         }
-
-        if (Input.GetKeyDown(judgeKey))
+        else
         {
-            if (Mathf.Abs(distance) < perfectDistance)
-            {
-                Debug.Log("Perfect");
-            }
-            else if (Mathf.Abs(distance) < goodDistance)
-            {
-                Debug.Log("Good");
-            }
-            else if (Mathf.Abs(distance) < badDistance)
-            {
-                Debug.Log("Bad");
-            }
-            else
+            if (closet.transform.position.y<transform.position.y-badDistance)
             {
                 Debug.Log("Miss");
-            }
 
-            closet.SetActive(false);
-            if (judgeLine == NoteType.A)
-                RhythmNoteManager.Instance.ALaneList.Remove(closet);
-            else
-                RhythmNoteManager.Instance.BLaneList.Remove(closet);
-            closet = null; 
+                RemoveNote();
+                return;
+            }
+            JudgeShortNote();
         }
+
+        
     }
 
-    GameObject FindClosetNote()
+    public GameObject FindClosetNote()
     {
         if (judgeLine == NoteType.A)
         {
@@ -101,6 +92,150 @@ public class NoteJudge : MonoBehaviour
             }
         }
         return null;
+    }
+
+
+    private void RemoveNote()
+    {
+        closet.SetActive(false);
+            
+            if (judgeLine == NoteType.A)
+                RhythmNoteManager.Instance.ALaneList.Remove(closet);
+            else
+                RhythmNoteManager.Instance.BLaneList.Remove(closet);
+            closet = null;
+    }
+    private void JudgeShortNote()
+    {
+        float distance = closet.transform.position.y - transform.position.y;
+
+        if (Input.GetKeyDown(judgeKey)&&Mathf.Abs(distance) < badDistance)
+        {
+           
+
+            
+        
+         if (Mathf.Abs(distance) < perfectDistance)
+            {
+                Debug.Log("Perfect");
+                
+            }
+            else if (Mathf.Abs(distance) < goodDistance)
+            {
+                Debug.Log("Good");
+                
+            }
+            else 
+            {
+                Debug.Log("Bad");
+                
+            }
+            RemoveNote();
+        }
+    }
+
+    private void JudgeLongNote()
+    {
+        //롱노트 시작 포지션(오브젝트 포지션)
+        //롱노트 끝 (롱노트 시작포지션 + longNoteLength)
+
+        float longNoteEndPos = closet.transform.position.y + closet.GetComponent<NoteScript>().longNoteLength;
+        float startDistance = closet.transform.position.y - transform.position.y;
+        
+
+        
+
+        
+
+        if (Input.GetKeyDown(judgeKey)&&Mathf.Abs(startDistance) < badDistance&&!isPressed)
+        {
+            
+            isPressed = true;
+            
+            
+        
+         if (Mathf.Abs(startDistance) < perfectDistance)
+            {
+                Debug.Log("Perfect");
+                
+            }
+            else if (Mathf.Abs(startDistance) < goodDistance)
+            {
+                Debug.Log("Good");
+                
+            }
+            else 
+            {
+                Debug.Log("Bad");
+                
+            }
+            
+        }
+
+        if (Input.GetKey(judgeKey) && isPressed)
+        {
+            
+            LongNoteEffect();
+        }
+
+        if (Input.GetKeyUp(judgeKey)&&isPressed)
+        {
+           
+        isPressed = false;
+        float endDistance = longNoteEndPos - transform.position.y;
+            
+        
+            if (Mathf.Abs(endDistance) < perfectDistance)
+            {
+                Debug.Log("Perfect");
+                
+            }
+            else if (Mathf.Abs(endDistance) < goodDistance)
+            {
+                Debug.Log("Good");
+                
+            }
+            else 
+            {
+                Debug.Log("Bad");
+                
+            }
+            Debug.Log("우히히");
+            RemoveNote();
+            
+        }
+
+    }
+
+    private void LongNoteEffect()
+    {
+        if (closet == null) return;
+
+        NoteScript noteScript = closet.GetComponent<NoteScript>();
+        LineRenderer lr = closet.GetComponent<LineRenderer>();
+        SpriteRenderer sr = closet.GetComponent<SpriteRenderer>();
+
+        noteScript.Triggered = false;
+        if (sr.enabled)
+            sr.enabled = false;
+
+       
+        lr.positionCount = 2;
+
+       
+        float tailY = closet.transform.position.y + noteScript.longNoteLength;
+
+        
+        
+
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, new Vector3(transform.position.x, tailY, 0));
+
+        // 3. 전부 소모되면 라인 제거
+        if (tailY <= transform.position.y)
+        {
+            lr.positionCount = 0;
+        }
     }
 
 

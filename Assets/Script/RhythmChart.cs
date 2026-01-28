@@ -23,7 +23,7 @@ public class NoteContext
     public float noteSpeed{get; private set;}
     public bool isLongNote{get; private set;}
     public float longNoteSize{get; private set;}
-    public NoteType NoteType;
+    
 
     public NoteContext(Transform noteLine,float noteSpeed,bool isLongNote,float longNoteSize,NoteType noteType)
     {
@@ -31,7 +31,7 @@ public class NoteContext
         this.noteSpeed = noteSpeed;
         this.isLongNote = isLongNote;
         this.longNoteSize = longNoteSize;
-        this.NoteType = noteType;
+        
     }
 }
 

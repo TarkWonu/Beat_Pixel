@@ -7,8 +7,10 @@ public class NoteScript : MonoBehaviour
 
     private float distance;
 
-    private bool isLongNote;
-    private float longNoteLength;
+    public bool isLongNote{get; private set;}
+    public float longNoteLength{get; private set;}
+
+    public bool Triggered = true;
     private float longNoteSize;
     
     LineRenderer lineRenderer;
@@ -35,7 +37,7 @@ public class NoteScript : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.down*distance*Time.deltaTime);
-        if(isLongNote)
+        if(isLongNote&&Triggered)
         {
             lineRenderer.positionCount =2;
             lineRenderer.SetPositions(new Vector3[2]{transform.position,transform.position+new Vector3(0,longNoteLength,0)});

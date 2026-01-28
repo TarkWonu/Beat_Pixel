@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(NoteJudge))]
 public class NoteJudgeEffect : MonoBehaviour
 {
     private LineRenderer lineRenderer;
@@ -13,6 +14,8 @@ public class NoteJudgeEffect : MonoBehaviour
     private Coroutine effectCoroutine;
     [Range(0f,1f)][SerializeField] private float lineAlpha;
     [SerializeField] private float lineLength;
+
+    private GameObject closet;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,10 +39,12 @@ public class NoteJudgeEffect : MonoBehaviour
         lineRenderer.endColor = new Color(1,0.87f,0.53f,0f);
         if (Input.GetKeyDown(judgeKey))
         {
+            closet = GetComponent<NoteJudge>().FindClosetNote();
             if(effectCoroutine != null)
             {
                 StopCoroutine(effectCoroutine);
             }
+            
             effectCoroutine = StartCoroutine(NoteLine());
             
         }
@@ -65,4 +70,8 @@ public class NoteJudgeEffect : MonoBehaviour
         lineRenderer.startWidth = 0f;
         lineRenderer.endWidth = 0f;
     }
+
+    
+
+    
 }
