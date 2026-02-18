@@ -1,0 +1,426 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f50960778e7914468e67381b195b5ba, type: 3}
+  m_Name: Lv3
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 9391cf31f72eebf4c976b7fbe5603721, type: 3}
+  bpm: 100
+  snapDiv: 4
+  notes:
+  - beat: 12
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 12.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 12.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 12.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 14.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 14.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 15
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 15.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 16
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 16.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 17.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 18.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 19.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 19.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 20
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 20.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 20.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 21
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 21.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 21.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 21.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 22.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 22.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 23
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 23.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 24
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 24.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 24.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 26.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 27.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 28.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 29.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 31.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 32.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 33.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 34.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 35.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 37.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 38.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 39.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 40.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 42
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 43.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 44.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 45.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 46.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 48
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 49
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 50.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 51.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 58
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 58.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 60
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 60.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 60.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 60.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 61.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 61.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 61.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 62.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 62.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 62.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 63.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 63.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 63.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 64
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 64.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 64.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 65
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 65.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 65.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 65.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 66.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 66.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 66.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 67
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 67.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 68.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 69.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 70.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 76.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 77
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 77.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 77.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 78
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 78.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 1
+  - beat: 78.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 79.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 81
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 82.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 83.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 84.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 85.625
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 86.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 87.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 89
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 90.125
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 91.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 92.375
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 93.5
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 94.875
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0

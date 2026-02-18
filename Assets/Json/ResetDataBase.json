@@ -1,0 +1,16 @@
+{
+    "keys": [
+        {
+            "keyAction": 0,
+            "keyCode": 276
+        },
+        {
+            "keyAction": 1,
+            "keyCode": 275
+        },
+        {
+            "keyAction": 2,
+            "keyCode": 32
+        }
+    ]
+}

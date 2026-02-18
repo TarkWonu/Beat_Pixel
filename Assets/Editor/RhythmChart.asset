@@ -32,6 +32,10 @@ MonoBehaviour:
     isLongNote: 0
     longNoteSize: 0
     type: 0
+  - beat: 5.25
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
   - beat: 6
     isLongNote: 0
     longNoteSize: 0

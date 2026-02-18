@@ -27,7 +27,7 @@ public class NoteJudgeEffect : MonoBehaviour
         lineRenderer.endWidth = 0;
 
 
-        judgeKey = judgeLine == NoteType.A ? KeyBindData.NoteA : KeyBindData.NoteB;
+        judgeKey = judgeLine == NoteType.A ? KeyBindData.Keys[KeyAction.NoteA] : KeyBindData.Keys[KeyAction.NoteB];
 
         
     }

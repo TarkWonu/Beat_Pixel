@@ -24,7 +24,7 @@ public class NoteJudge : MonoBehaviour
     {
         get
         {
-            return judgeLine == NoteType.A ? KeyBindData.NoteA : KeyBindData.NoteB;
+            return judgeLine == NoteType.A ? KeyBindData.Keys[KeyAction.NoteA] : KeyBindData.Keys[KeyAction.NoteB];
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created

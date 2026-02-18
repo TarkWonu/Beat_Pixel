@@ -279,7 +279,7 @@ public class RhythmChartEditorWindow : EditorWindow
                 ? new Color(0.35f, 0.85f, 0.35f, 1f)
                 : new Color(0.35f, 0.6f, 0.95f, 1f);
 
-            if (i == selectIndex) c = Color.Lerp(c, Color.white, 0.35f);
+            if (i == selectIndex) c = Color.Lerp(c, Color.red, 0.35f);
 
             EditorGUI.DrawRect(noteRect, c);
             EditorGUI.DrawRect(new Rect(noteRect.x, noteRect.y, noteRect.width, 1), new Color(1, 1, 1, 0.35f));
