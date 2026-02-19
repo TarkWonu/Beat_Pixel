@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f50960778e7914468e67381b195b5ba, type: 3}
   m_Name: LV7
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 5ea41cc98a7df3d4f9daf3897f6e4ad3, type: 3}
+  clip: {fileID: 8300000, guid: baccec9f9ccc0e64ca12030a929724d1, type: 3}
   bpm: 110
   snapDiv: 4
   notes:

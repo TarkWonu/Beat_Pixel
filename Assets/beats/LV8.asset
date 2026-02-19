@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f50960778e7914468e67381b195b5ba, type: 3}
   m_Name: LV8
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 206c873682aee6c45b3ad57d60fc0db7, type: 3}
+  clip: {fileID: 8300000, guid: 6547efdd1aca8fc47a9166eec56edfd1, type: 3}
   bpm: 105
   snapDiv: 4
   notes:
@@ -157,12 +157,12 @@ MonoBehaviour:
     longNoteSize: 0
     type: 0
   - beat: 32
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 0
   - beat: 32
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 1
   - beat: 36
     isLongNote: 0

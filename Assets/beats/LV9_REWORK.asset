@@ -17,36 +17,36 @@ MonoBehaviour:
   snapDiv: 4
   notes:
   - beat: 8
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 0
   - beat: 8
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 1
   - beat: 12
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 0
   - beat: 12
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 1
   - beat: 16
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 0
   - beat: 16
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 1
   - beat: 20
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 0
   - beat: 20
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 1
   - beat: 24
     isLongNote: 0
@@ -252,10 +252,22 @@ MonoBehaviour:
     isLongNote: 0
     longNoteSize: 0
     type: 0
+  - beat: 45
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
   - beat: 47
     isLongNote: 0
     longNoteSize: 0
     type: 1
+  - beat: 48
+    isLongNote: 1
+    longNoteSize: 1
+    type: 0
+  - beat: 48
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
   - beat: 48
     isLongNote: 0
     longNoteSize: 0
@@ -269,8 +281,8 @@ MonoBehaviour:
     longNoteSize: 0
     type: 0
   - beat: 52
-    isLongNote: 0
-    longNoteSize: 0
+    isLongNote: 1
+    longNoteSize: 3
     type: 0
   - beat: 52
     isLongNote: 0
@@ -797,6 +809,10 @@ MonoBehaviour:
     longNoteSize: 0
     type: 1
   - beat: 103.75
+    isLongNote: 0
+    longNoteSize: 0
+    type: 0
+  - beat: 104
     isLongNote: 0
     longNoteSize: 0
     type: 0
