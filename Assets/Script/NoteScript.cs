@@ -11,7 +11,7 @@ public class NoteScript : MonoBehaviour
     public float longNoteLength{get; private set;}
 
     public bool Triggered = true;
-    private float longNoteSize;
+    public float longNoteSize{get; private set;}
     
     LineRenderer lineRenderer;
 

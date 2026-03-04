@@ -5,24 +5,34 @@ using System.IO;
 public class KeyBindManager : MonoBehaviour
 {
 
-    string _filePath = Application.dataPath + "/Json/" + "AddressDataBase.json";
-    string _resetPath = Application.dataPath + "/Json/" + "ResetDataBase.json";
+    string _filePath = "AddressKeyData.json";
+    
     private int key = -1;
 
     void Awake()
     {
-        LoadKeyData(_filePath);
-
+        
+        LoadKeyData();
+        
 
     }
 
+    void Start()
+    {
+        
+    }
 
 
 
 
     public void ResetKeyData()
     {
-        LoadKeyData(_resetPath);
+        KeyBindData.Keys.Clear();
+
+        KeyBindData.Keys.Add(KeyAction.NoteA,KeyCode.LeftArrow);
+        KeyBindData.Keys.Add(KeyAction.NoteB,KeyCode.RightArrow);
+        KeyBindData.Keys.Add(KeyAction.Switch,KeyCode.Space);
+        SaveKeyData();
     }
 
     
@@ -30,18 +40,20 @@ public class KeyBindManager : MonoBehaviour
     {
         SaveKeyData keydata = new SaveKeyData(KeyBindData.Keys);
 
-        string jData = JsonUtility.ToJson(keydata,true);
-        File.WriteAllText(_filePath,jData);
-
-        print(_filePath);
+        DataSaveManager.SaveData<SaveKeyData>(_filePath,keydata);
     }
 
-    private void LoadKeyData(string path)
+    private void LoadKeyData()
     {
-        string json = File.ReadAllText(path);
-        SaveKeyData LoadData = JsonUtility.FromJson<SaveKeyData>(json);
 
         
+        SaveKeyData LoadData = DataSaveManager.LoadData<SaveKeyData>(_filePath);
+
+        if(LoadData == null)
+        {
+            ResetKeyData();
+            return;
+        }
 
         KeyBindData.Keys.Clear();
 

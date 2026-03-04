@@ -19,7 +19,7 @@ public class NoteJudgeEffect : MonoBehaviour
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPositions(new Vector3[2]{transform.position-new Vector3(0,0.15f,0),transform.position+new Vector3(0,lineLength,0)});

@@ -1,13 +1,15 @@
 
+using TMPro;
 using UnityEngine;
 
-enum RhythmState
+public enum RhythmState
 {
     Perfect,
     Good,
     Bad,
     Miss
 }
+
 
 public class NoteJudge : MonoBehaviour
 {
@@ -16,9 +18,26 @@ public class NoteJudge : MonoBehaviour
     [SerializeField] private float goodDistance;
     [SerializeField] private float badDistance;
 
+    [SerializeField] PixelEdit pixelEdit;
+
+
+    
+
+    private RhythmGameController rhythmGameController;    
+
     private GameObject closet = null;
 
     private bool isPressed = false;
+
+    private float holdTimer = 0f;
+    private float unitBeatTime;
+    private int totalFillCount = 1;
+    private int currentFillIndex;
+
+    
+
+    [SerializeField]private Transform judgePos;
+    [SerializeField] TMP_Text judgeText;
      
     private KeyCode judgeKey
     {
@@ -28,9 +47,9 @@ public class NoteJudge : MonoBehaviour
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        
+        rhythmGameController = FindFirstObjectByType<RhythmGameController>();
     }
 
     // Update is called once per frame
@@ -44,7 +63,7 @@ public class NoteJudge : MonoBehaviour
     private void JudgeRhythmNote()
     {
         if (closet != null) 
-            Debug.DrawLine(transform.position, closet.transform.position, Color.cyan);
+            Debug.DrawLine(judgePos.position, closet.transform.position, Color.cyan);
         if (closet == null)
         {
             closet = FindClosetNote();
@@ -57,13 +76,43 @@ public class NoteJudge : MonoBehaviour
 
         if (closet.GetComponent<NoteScript>().isLongNote)
         {
+            
+            NoteScript note = closet.GetComponent<NoteScript>();
+
+            // 👇 아직 계산 안 되어있으면 미리 계산
+            if (totalFillCount == 0)
+            {
+                float longBeat = note.longNoteSize;
+                int snapDiv = rhythmGameController.rhythmChart.snapDiv;
+
+                totalFillCount = Mathf.RoundToInt(longBeat * snapDiv);
+            }
+
+            float longNoteEndPos =
+                closet.transform.position.y + note.longNoteLength;
+
+            // 🎯 롱노트를 아예 안 눌렀는데 끝이 지나가면
+            if (longNoteEndPos < judgePos.position.y - badDistance)
+            {
+                if (!isPressed) // 한번도 안 눌렀으면
+                {
+                    for (int i = 0; i < totalFillCount; i++)
+                    {
+                        JudgeState(RhythmState.Miss);
+                    }
+                }
+
+                RemoveNote();
+                return;
+            }
+
             JudgeLongNote();
         }
         else
         {
-            if (closet.transform.position.y<transform.position.y-badDistance)
+            if (closet.transform.position.y<judgePos.position.y-badDistance)
             {
-                Debug.Log("Miss");
+                JudgeState(RhythmState.Miss);
 
                 RemoveNote();
                 return;
@@ -97,17 +146,18 @@ public class NoteJudge : MonoBehaviour
 
     private void RemoveNote()
     {
-        closet.SetActive(false);
+        
             
             if (judgeLine == NoteType.A)
                 RhythmNoteManager.Instance.ALaneList.Remove(closet);
             else
                 RhythmNoteManager.Instance.BLaneList.Remove(closet);
-            closet = null;
+            Destroy(closet);
+            
     }
     private void JudgeShortNote()
     {
-        float distance = closet.transform.position.y - transform.position.y;
+        float distance = closet.transform.position.y - judgePos.position.y;
 
         if (Input.GetKeyDown(judgeKey)&&Mathf.Abs(distance) < badDistance)
         {
@@ -117,17 +167,17 @@ public class NoteJudge : MonoBehaviour
         
          if (Mathf.Abs(distance) < perfectDistance)
             {
-                Debug.Log("Perfect");
+                JudgeState(RhythmState.Perfect);
                 
             }
             else if (Mathf.Abs(distance) < goodDistance)
             {
-                Debug.Log("Good");
+                JudgeState(RhythmState.Good);
                 
             }
             else 
             {
-                Debug.Log("Bad");
+                JudgeState(RhythmState.Bad);
                 
             }
             RemoveNote();
@@ -135,77 +185,98 @@ public class NoteJudge : MonoBehaviour
     }
 
     private void JudgeLongNote()
+{
+    NoteScript note = closet.GetComponent<NoteScript>();
+    float startDistance = closet.transform.position.y - judgePos.position.y;
+
+    
+    if (Input.GetKeyDown(judgeKey) &&
+        Mathf.Abs(startDistance) < badDistance &&
+        !isPressed)
     {
-        //롱노트 시작 포지션(오브젝트 포지션)
-        //롱노트 끝 (롱노트 시작포지션 + longNoteLength)
+        isPressed = true;
 
-        float longNoteEndPos = closet.transform.position.y + closet.GetComponent<NoteScript>().longNoteLength;
-        float startDistance = closet.transform.position.y - transform.position.y;
-        
+        float longBeat = note.longNoteSize;
+        int snapDiv = rhythmGameController.rhythmChart.snapDiv;
 
-        
+        totalFillCount = Mathf.RoundToInt(longBeat * snapDiv);
 
-        
+        unitBeatTime = rhythmGameController.beatPerSec / snapDiv;
 
-        if (Input.GetKeyDown(judgeKey)&&Mathf.Abs(startDistance) < badDistance&&!isPressed)
-        {
-            
-            isPressed = true;
-            
-            
-        
-         if (Mathf.Abs(startDistance) < perfectDistance)
+        holdTimer = 0f;
+
+       
+        if (Mathf.Abs(startDistance) < perfectDistance)
             {
-                Debug.Log("Perfect");
-                
-            }
-            else if (Mathf.Abs(startDistance) < goodDistance)
-            {
-                Debug.Log("Good");
-                
-            }
-            else 
-            {
-                Debug.Log("Bad");
-                
+                JudgeState(RhythmState.Perfect);
             }
             
+        else if (Mathf.Abs(startDistance) < goodDistance){
+            JudgeState(RhythmState.Good);
         }
-
-        if (Input.GetKey(judgeKey) && isPressed)
-        {
-            
-            LongNoteEffect();
-        }
-
-        if (Input.GetKeyUp(judgeKey)&&isPressed)
-        {
-           
-        isPressed = false;
-        float endDistance = longNoteEndPos - transform.position.y;
-            
-        
-            if (Mathf.Abs(endDistance) < perfectDistance)
+            else
             {
-                Debug.Log("Perfect");
-                
+               JudgeState(RhythmState.Bad);
             }
-            else if (Mathf.Abs(endDistance) < goodDistance)
-            {
-                Debug.Log("Good");
-                
-            }
-            else 
-            {
-                Debug.Log("Bad");
-                
-            }
-            Debug.Log("우히히");
-            RemoveNote();
             
-        }
 
+        currentFillIndex = 1; 
     }
+
+   
+    if (Input.GetKey(judgeKey) && isPressed)
+    {
+        holdTimer += Time.deltaTime;
+
+        while (holdTimer >= unitBeatTime &&
+               currentFillIndex < totalFillCount)
+        {
+            holdTimer -= unitBeatTime;
+            currentFillIndex++;
+
+            JudgeState(RhythmState.Perfect);
+        }
+
+        LongNoteEffect();
+    }
+
+    
+    if (Input.GetKeyUp(judgeKey) && isPressed)
+    {
+        isPressed = false;
+
+        float longNoteEndPos =
+            closet.transform.position.y + note.longNoteLength;
+
+        float endDistance =
+            longNoteEndPos - judgePos.position.y;
+
+        if (Mathf.Abs(endDistance) < perfectDistance)
+            {
+                JudgeState(RhythmState.Perfect);
+            }
+            
+        else if (Mathf.Abs(endDistance) < goodDistance)
+            {
+                JudgeState(RhythmState.Good);
+            }
+
+            else
+            {
+                JudgeState(RhythmState.Bad);
+            }
+            
+
+        
+        int remain = totalFillCount - currentFillIndex;
+        for (int i = 0; i < remain; i++)
+        {
+            JudgeState(RhythmState.Miss);
+        }
+
+        RemoveNote();
+    }
+}
 
     private void LongNoteEffect()
     {
@@ -239,10 +310,38 @@ public class NoteJudge : MonoBehaviour
     }
 
 
+    private void JudgeState(RhythmState state)
+    {
+        switch (state)
+        {
+            case RhythmState.Perfect:
+                RhythmGameScoreManager.Instance.AddCombo();
+                RhythmGameScoreManager.Instance.perfect++;
+                judgeText.text = "Perfect";
+                break;
+            case RhythmState.Good:
+                RhythmGameScoreManager.Instance.AddCombo();
+                RhythmGameScoreManager.Instance.good++;
+                judgeText.text = "Good";
+                break;
+            case RhythmState.Bad:
+                RhythmGameScoreManager.Instance.ResetCombo();
+                RhythmGameScoreManager.Instance.bad++;
+                break;
+            case RhythmState.Miss:
+                RhythmGameScoreManager.Instance.ResetCombo();
+                RhythmGameScoreManager.Instance.miss++;
+                break;
+        }
+
+        pixelEdit.FillTexture(state);
+    }
+
+
     void OnDrawGizmos()
     {
 
-        Vector3 pos = transform.position;
+        Vector3 pos = judgePos.position;
     
     // 미스 판정 경계선을 빨간색 선으로 그립니다.
         Gizmos.color = Color.red;
@@ -250,15 +349,20 @@ public class NoteJudge : MonoBehaviour
         Vector3 missLineEnd = new Vector3(pos.x + 1f, pos.y - badDistance, pos.z);
         Gizmos.DrawLine(missLinePos, missLineEnd);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position,badDistance);
+        Gizmos.DrawWireSphere(pos,badDistance);
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position,goodDistance);
+        Gizmos.DrawWireSphere(pos,goodDistance);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position,perfectDistance);
+        Gizmos.DrawWireSphere(pos,perfectDistance);
         
         
         
     }
+
+
+    
 }
+
+

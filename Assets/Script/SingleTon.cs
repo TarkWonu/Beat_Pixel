@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
+
+    virtual protected bool UseDontDestroyOnLoad => true;
     private static T instance;
 
     public static T Instance
@@ -15,9 +17,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
                 if (instance == null) // 인스턴스를 찾지 못한 경우
                 {
-                    // 새로운 게임 오브젝트를 생성하여 해당 컴포넌트를 추가한다.
+                    
                     GameObject obj = new GameObject(typeof(T).Name, typeof(T));
-                    // 생성된 게임 오브젝트에서 해당 컴포넌트를 instance에 저장한다.
+                    
                     instance = obj.GetComponent<T>();
                 }
             }
@@ -28,13 +30,18 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Awake()
     {
-        if(transform.parent != null && transform.root != null) // 해당 오브젝트가 자식 오브젝트라면
+
+        if (UseDontDestroyOnLoad)
         {
-            DontDestroyOnLoad(this.transform.root.gameObject); // 부모 오브젝트를 DontDestroyOnLoad 처리
+            if(transform.parent != null && transform.root != null) 
+            {
+                DontDestroyOnLoad(this.transform.root.gameObject); 
+            }
+            else
+            {
+                DontDestroyOnLoad(this.gameObject); 
+            }
         }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject); // 해당 오브젝트가 최 상위 오브젝트라면 자신을 DontDestroyOnLoad 처리
-        }
+        
     }
 }

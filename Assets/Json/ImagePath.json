@@ -1,0 +1,34 @@
+{
+    "filePaths": [
+        {
+            "fileName": "WoodenFloor",
+            "imagePath": "WoodenFloor_5.png",
+            "accuracy": 91.30000305175781
+        },
+        {
+            "fileName": "WoodenFloor",
+            "imagePath": "WoodenFloor_6.png",
+            "accuracy": 90.20000457763672
+        },
+        {
+            "fileName": "WoodenFloor",
+            "imagePath": "WoodenFloor_7.png",
+            "accuracy": 93.9000015258789
+        },
+        {
+            "fileName": "WoodenFloor",
+            "imagePath": "WoodenFloor_8.png",
+            "accuracy": 89.80000305175781
+        },
+        {
+            "fileName": "WoodenFloor",
+            "imagePath": "WoodenFloor_9.png",
+            "accuracy": 92.5
+        },
+        {
+            "fileName": "WoodenFloor",
+            "imagePath": "WoodenFloor_10.png",
+            "accuracy": 88.9000015258789
+        }
+    ]
+}

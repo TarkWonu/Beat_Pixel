@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcdc6fccfb6f864b8081e47288dc85d, type: 3}
+  m_Name: WallPaper
+  m_EditorClassIdentifier: 
+  rhythmChart: {fileID: 0}
+  pixelImage: {fileID: 0}
+  infoText: "\uBC14\uB77C\uBCF4\uACE0 \uC788\uC73C\uBA74 \uC815\uC2E0\uC774 \uD63C\uBBF8\uD574\uC9C0\uB294
+    \uBCBD\uC9C0. \n\uC778\uD14C\uB9AC\uC5B4 \uC13C\uC2A4\uAC00 \uC0C1\uB2F9\uD788
+    \uC758\uC2EC\uB41C\uB2E4...."

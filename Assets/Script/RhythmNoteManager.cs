@@ -6,4 +6,6 @@ public class RhythmNoteManager : Singleton<RhythmNoteManager>
 {
     public List<GameObject> ALaneList;
     public List<GameObject> BLaneList;
+
+    protected override bool UseDontDestroyOnLoad => false;
 }

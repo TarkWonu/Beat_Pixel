@@ -11,6 +11,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGame.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/SettingMenu.unity
+    guid: c1a3a09af9923b543b004062ffa721b6
+  - enabled: 1
+    path: Assets/Scenes/SongSelectScene.unity
+    guid: f63373908b512a3478a5724a0e2d3068
+  - enabled: 1
+    path: Assets/Scenes/PixelDrawTest.unity
+    guid: d8528cb9f141e6c4ab5b1ea9a3fd6ef2
+  - enabled: 1
+    path: Assets/Scenes/ResultScene.unity
+    guid: d9e906439469c09459551c013e172eb2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

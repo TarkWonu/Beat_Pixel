@@ -1,5 +1,8 @@
 
+using System.Collections;
 using NUnit.Framework;
+using PixeLadder.EasyTransition;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -14,9 +17,17 @@ public class RhythmGameController : MonoBehaviour
     [SerializeField] Transform noteSpawnerA;
     [SerializeField] Transform noteSpawnerB;
     [Tooltip("노트가 생성직후 위치부터 판정선까지 도달하는데 걸리는 \"시간\"")]
-    [SerializeField] private float noteSpeed;
+    [SerializeField] public float noteSpeed;
     
-    [SerializeField,] private Transform noteLine;
+    [SerializeField] private Transform noteLine;
+
+    [Header("UI")]
+    [SerializeField] TMP_Text cntDown;
+    [SerializeField] TMP_Text comboText;
+
+    private int timer;
+
+    private bool gameStart = false;
     
 
 
@@ -25,6 +36,8 @@ public class RhythmGameController : MonoBehaviour
     private AudioSource audioSource;
     private int beatIndex = 0;
     private float currentTime;
+
+    private ImageFileSave image;
 
     public float beatPerSec
     {
@@ -36,15 +49,38 @@ public class RhythmGameController : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = rhythmChart.clip;
-        audioSource.Play();
+        try
+        {
+            rhythmChart = PlayDataManager.Instance.PlayChart.rhythmChart;
+        }
+        catch
+        {
+            Debug.Log("파일이 어ㅄ어요");
+        }
+        
+    }
+
+    private void Start()
+    {
+        image = FindFirstObjectByType<ImageFileSave>();
+        
+        noteSpeed= 2/GameSettingData.NoteSpeed;
+         audioSource = GetComponent<AudioSource>();
+        
+        StartCoroutine(Countdown());
     }
 
 
     void Update()
     {
-        if(beatIndex>=rhythmChart.notes.Count) return;
+
+        if(!gameStart) return;
+        if (beatIndex >= rhythmChart.notes.Count&&gameStart)
+        {
+            StartCoroutine(GameEnd());
+            return;
+        }
+        
         
         float beatTime = beatPerSec*rhythmChart.notes[beatIndex].beat;
         if (beatTime - noteSpeed >= 0)
@@ -82,7 +118,37 @@ public class RhythmGameController : MonoBehaviour
             beatIndex++;
             currentTime = 0f;
         }
+
+        comboText.text = RhythmGameScoreManager.Instance.combo.ToString();
         
+    }
+
+
+    private IEnumerator Countdown()
+    {
+        timer = 3;
+        
+
+        while (timer > 0)
+        {
+            cntDown.text = timer.ToString();
+            yield return new WaitForSeconds(1);
+            timer--;
+        }
+        gameStart = true;
+        audioSource.clip = rhythmChart.clip;
+        audioSource.Play();
+        RhythmGameScoreManager.Instance.init();
+        cntDown.text = "";
+    }
+
+    private IEnumerator GameEnd()
+    {
+        gameStart = false;
+        yield return new WaitForSeconds(noteSpeed+2);
+        
+        image.SaveImage();
+        SceneTransitioner.Instance.LoadScene("ResultScene");
     }
 }
 

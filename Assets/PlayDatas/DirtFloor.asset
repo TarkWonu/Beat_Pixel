@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcdc6fccfb6f864b8081e47288dc85d, type: 3}
+  m_Name: DirtFloor
+  m_EditorClassIdentifier: 
+  rhythmChart: {fileID: 11400000, guid: 59ec0619a14647b4292d4ffc7792622f, type: 2}
+  pixelImage: {fileID: 0}
+  infoText: "\uC2DC\uACE8\uC5D0\uC11C\uB9CC \uB9C8\uC8FC\uCE60 \uC218 \uC788\uB294
+    \uD759\uBC14\uB2E5. \n\uBE44\uAC00 \uC624\uBA74 \uC9C4\uD759\uC774 \uB418\uC5B4\uBC84\uB9AC\uB2C8
+    \uC870\uC2EC\uD558\uC790"
