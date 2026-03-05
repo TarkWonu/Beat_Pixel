@@ -10,6 +10,7 @@ public class MusicPlayData : ScriptableObject
     public Sprite pixelImage;
 
     public string title;
+    public objectType type;
     
 
     [TextArea]

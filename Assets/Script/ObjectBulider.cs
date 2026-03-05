@@ -6,8 +6,20 @@ public class Builder : MonoBehaviour
     public Sprite buildSprite;
     public LayerMask blockLayer;
 
+    [SerializeField] GridTile SkyTile;
+    [SerializeField] GridTile WallTile;
+    [SerializeField] GridTile FloorTile;
+    public objectType objectType{get;set;}
+
+    private PanelShowController panel;
+
     GameObject preview;
     SpriteRenderer previewRenderer;
+
+    void Awake()
+    {
+        panel = FindFirstObjectByType<PanelShowController>();
+    }
 
     void Start()
     {
@@ -25,13 +37,29 @@ public class Builder : MonoBehaviour
 
     void Update()
     {
-        if (buildSprite != null)
+        if (buildSprite != null&&panel.expandStateMachine.currentState is SimpleBackGround)
         {
             UpdatePreview();
 
             if (Input.GetMouseButtonDown(0))
             {
-                TryPlace();
+                switch (objectType)
+                {
+                    case objectType.Obj:
+                        TryPlace();
+                        break;
+                    case objectType.Sky:
+                        SkyTile.ChangeTile(buildSprite);
+                        break;
+                    case objectType.Floor:
+                        FloorTile.ChangeTile(buildSprite);
+                        break;
+                    case objectType.Wall:
+                        WallTile.ChangeTile(buildSprite);
+                        break;
+                }
+                
+                buildSprite = null;
             }
 
             

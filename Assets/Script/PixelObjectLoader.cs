@@ -15,7 +15,7 @@ public class PixelObjectLoader : MonoBehaviour
 
             Texture2D texture = ImageSaveManager.LoadPNG(path.imagePath);
 
-            obj.GetComponent<ObjectSetting>().Init(texture:texture,title:path.fileName,accuracy:path.accuracy);
+            obj.GetComponent<ObjectSetting>().Init(texture:texture,title:path.fileName,accuracy:path.accuracy,path.type);
         }
     }
 

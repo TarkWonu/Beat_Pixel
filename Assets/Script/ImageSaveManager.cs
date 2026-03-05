@@ -16,14 +16,16 @@ public class FileContext
     public string fileName;
     public string imagePath;
     public float accuracy;
+    public objectType type;
 
      public FileContext() { } 
 
-    public FileContext(string fileName,string imagePath,float accuracy)
+    public FileContext(string fileName,string imagePath,float accuracy,objectType objectType)
     {
         this.fileName = fileName;
         this.imagePath = imagePath;
         this.accuracy = accuracy;
+        this.type =objectType;
     }
 }
 public static class ImageSaveManager

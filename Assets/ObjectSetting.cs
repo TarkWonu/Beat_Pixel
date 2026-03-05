@@ -11,7 +11,7 @@ public class ObjectSetting : MonoBehaviour
 
     [SerializeField] Sprite[] iconlist;
 
-    public void Init(Texture2D texture,string title,float accuracy)
+    public void Init(Texture2D texture,string title,float accuracy,objectType type)
     {
         this.pixel = transform.GetChild(0).GetComponent<Image>();
         this.title = transform.GetChild(1).GetComponent<TMP_Text>();
@@ -31,6 +31,8 @@ public class ObjectSetting : MonoBehaviour
         this.accuracy.text = accuracy.ToString()+"%";
 
         GetComponent<RectTransform>().localScale = new Vector2(1,1);
+
+        transform.GetChild(0).GetComponent<ObjectUiSelect>().type = type;
         
 
 

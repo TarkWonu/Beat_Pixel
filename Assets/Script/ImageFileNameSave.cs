@@ -12,10 +12,12 @@ public class ImageFileSave : MonoBehaviour
     private string pathListName = ImageSaveManager.pathFileName;
     private SpriteRenderer spriteRenderer;
     private ImageFilePath list;
+    private objectType type;
 
     void Awake()
     {
         fileName = PlayDataManager.Instance.PlayChart.title;
+        type  = PlayDataManager.Instance.PlayChart.type;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -31,10 +33,10 @@ public class ImageFileSave : MonoBehaviour
     private void SavePath(string imageName)
     {
         
-        list = DataSaveManager.LoadData<ImageFilePath>("ImagePath.Json");
-        Debug.Log(list.filePaths.Count);
-        list.filePaths.Add(new FileContext(fileName:fileName,imageName,accuracy:GetAccuracy()));
-        Debug.Log(list.filePaths.Count);
+        list = DataSaveManager.LoadData<ImageFilePath>("ImagePath.json");
+        
+        list.filePaths.Add(new FileContext(fileName:fileName,imageName,accuracy:GetAccuracy(),objectType:type));
+        
         DataSaveManager.SaveData<ImageFilePath>(pathListName,list);
 
     }

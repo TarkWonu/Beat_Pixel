@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 4215173251614211126}
   - component: {fileID: 3073376913172333676}
   - component: {fileID: 2473794668249659284}
-  - component: {fileID: 8573040096639431521}
+  - component: {fileID: 8172865474458926355}
   m_Layer: 3
   m_Name: Image
   m_TagString: Untagged
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: 3}
   m_UseGraphicAlpha: 0
---- !u!114 &8573040096639431521
+--- !u!114 &8172865474458926355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,9 +231,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5854755422294209487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c4a762cc5716954e8989bcdedbf8292, type: 3}
+  m_Script: {fileID: 11500000, guid: 6366b3d71f3f0144496f71c1bc14f1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!1 &7472622605327406164
 GameObject:
   m_ObjectHideFlags: 0
